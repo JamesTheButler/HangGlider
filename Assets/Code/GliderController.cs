@@ -114,15 +114,22 @@ namespace Code
             var currentRoll = transform.localRotation.eulerAngles.z;
             var currentNormalizedRoll = NormalizeAngle(currentRoll);
 
+            if ((Mathf.Approximately(currentNormalizedRoll, maxRollAngleInDeg) && rollAngle > 0) ||
+                (Mathf.Approximately(currentNormalizedRoll, -maxRollAngleInDeg) && rollAngle < 0))
+            {
+                return 0;
+            }
+
             // if currentRoll == 44 and rollAngle == 2 => rollAngle = 1
             if (currentNormalizedRoll + rollAngle > maxRollAngleInDeg)
             {
-                rollAngle = maxRollAngleInDeg - currentNormalizedRoll;
+                return maxRollAngleInDeg - currentNormalizedRoll;
             }
+            
             // if currentRoll == -44 and rollAngle == -2 => rollAngle = -1
-            else if (currentNormalizedRoll + rollAngle < -maxRollAngleInDeg)
+            if (currentNormalizedRoll + rollAngle < -maxRollAngleInDeg)
             {
-                rollAngle = maxRollAngleInDeg + currentNormalizedRoll;
+                return -(maxRollAngleInDeg + currentNormalizedRoll);
             }
 
             return rollAngle;
