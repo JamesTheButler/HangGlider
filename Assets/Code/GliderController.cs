@@ -1,3 +1,4 @@
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 
 namespace Code
@@ -62,18 +63,47 @@ namespace Code
                 Vector3.up,
                 yaw);
 
-            var rollAngle = inputDiff * rollSpeedInDegPerSec * Time.deltaTime;
-            if (Mathf.Approximately(rollAngle, 0f) && !Mathf.Approximately(transform.localRotation.eulerAngles.z, 0f))
-            {
-                Debug.Log("Rotate back to straight here");
-            }
+            var baseRoll = rollSpeedInDegPerSec * Time.deltaTime;
 
+            var rollAngle = inputDiff * baseRoll;
             rollAngle = ClampRollAngle(rollAngle);
+
+            // apply auto-leveling/auto un-roll
+            if (Mathf.Approximately(rollAngle, 0f))
+            {
+                rollAngle = DisableAutoBalanceWobble(baseRoll);
+            }
 
             transform.RotateAround(
                 transform.position,
                 transform.forward,
                 rollAngle);
+        }
+
+        private float DisableAutoBalanceWobble(float baseRoll)
+        {
+            float rollAngle;
+            var currentRoll = transform.localRotation.eulerAngles.z;
+            var currentNormalizedRoll = NormalizeAngle(currentRoll);
+
+            rollAngle = baseRoll * -Mathf.Sign(currentNormalizedRoll);
+            // fix wobble around center
+            if (
+                (currentNormalizedRoll > 0 &&
+                 currentNormalizedRoll < baseRoll &&
+                 Mathf.Abs(rollAngle) > currentNormalizedRoll &&
+                 rollAngle < 0f)
+                ||
+                (currentNormalizedRoll < 0 &&
+                 Mathf.Abs(currentNormalizedRoll) < baseRoll &&
+                 Mathf.Abs(rollAngle) > currentNormalizedRoll &&
+                 rollAngle > 0f)
+            )
+            {
+                rollAngle = -currentNormalizedRoll;
+            }
+
+            return rollAngle;
         }
 
         /// <summary>
