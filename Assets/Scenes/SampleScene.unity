@@ -5311,12 +5311,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -6009042415847005848, guid: 7fec2b03368a77e4b8e5eee29688927d, type: 3}
-      propertyPath: maxRollAngleInDeg
+      propertyPath: rollResetSpeedInDegPerSec
       value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: -6009042415847005848, guid: 7fec2b03368a77e4b8e5eee29688927d, type: 3}
-      propertyPath: rollSpeedInDegPerSec
-      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2145533926090790313, guid: 7fec2b03368a77e4b8e5eee29688927d, type: 3}
       propertyPath: m_IsKinematic

@@ -237,10 +237,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMoveSpeedInSec: 5
-  maxRollAngleInDeg: 45
   yawSpeedInDegPerSec: 5
-  rollSpeedInDegPerSec: 25
   boostMultiplier: 2
+  rollSpeedInDegPerSec: 30
+  rollResetSpeedInDegPerSec: 30
+  maxRollAngleInDeg: 60
 --- !u!1001 &7889367614495504557
 PrefabInstance:
   m_ObjectHideFlags: 0
