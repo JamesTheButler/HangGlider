@@ -26,6 +26,7 @@ namespace Code
         private Inputs _currentInputs = new(0, 0);
 
         private FlightInputs _flightInputs;
+        private SerialFlightInputs _serialFlightInputs;
         private bool _isBoosting;
 
         private int i;
@@ -156,6 +157,9 @@ namespace Code
 
         private void SetUpFlightControls()
         {
+            _serialFlightInputs = GetComponent<SerialFlightInputs>();
+            _serialFlightInputs.InputsChanged += OnFlightInputsOnInputsChanged;
+
             _flightInputs = GetComponent<FlightInputs>();
             _currentInputs = _flightInputs.Inputs;
             _flightInputs.InputsChanged += OnFlightInputsOnInputsChanged;
