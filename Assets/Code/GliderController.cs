@@ -5,6 +5,9 @@ namespace Code
     public class GliderController : MonoBehaviour
     {
         [SerializeField]
+        private FlightInputs flightInputs;
+
+        [SerializeField]
         private float defaultMoveSpeedInSec = 5f;
 
         [SerializeField]
@@ -24,8 +27,6 @@ namespace Code
         private float maxRollAngleInDeg = 45f;
 
         private Inputs _currentInputs = new(0, 0);
-
-        private FlightInputs _flightInputs;
         private bool _isBoosting;
 
         private int i;
@@ -47,8 +48,8 @@ namespace Code
 
         private void OnDestroy()
         {
-            _flightInputs.InputsChanged -= OnFlightInputsOnInputsChanged;
-            _flightInputs.BoostChanged -= OnFlightInputsOnBoostChanged;
+            flightInputs.InputsChanged -= OnFlightInputsOnInputsChanged;
+            flightInputs.BoostChanged -= OnFlightInputsOnBoostChanged;
         }
 
         private void ApplyInputs()
@@ -156,10 +157,9 @@ namespace Code
 
         private void SetUpFlightControls()
         {
-            _flightInputs = GetComponent<FlightInputs>();
-            _currentInputs = _flightInputs.Inputs;
-            _flightInputs.InputsChanged += OnFlightInputsOnInputsChanged;
-            _flightInputs.BoostChanged += OnFlightInputsOnBoostChanged;
+            _currentInputs = flightInputs.Inputs;
+            flightInputs.InputsChanged += OnFlightInputsOnInputsChanged;
+            flightInputs.BoostChanged += OnFlightInputsOnBoostChanged;
         }
 
         private void OnFlightInputsOnBoostChanged(bool boost)
