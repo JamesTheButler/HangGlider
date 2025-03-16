@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Code;
 using Code.Inputs;
 using UnityEngine;
 
@@ -46,7 +47,7 @@ public class UIManager : MonoBehaviour
         switch (UiState)
         {
             case UiState.LandingPage:
-                UiState = UiState.InGame;
+                StartGame();
                 break;
             case UiState.LevelSelectionPage:
                 break;
@@ -63,5 +64,13 @@ public class UIManager : MonoBehaviour
         foreach (var page in _pages.Values) page.SetActive(false);
 
         _pages[newPage].SetActive(true);
+    }
+
+    private void StartGame()
+    {
+        UiState = UiState.InGame;
+
+        var player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<GliderController>().enabled = true;
     }
 }

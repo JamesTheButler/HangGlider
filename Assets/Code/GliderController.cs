@@ -49,6 +49,11 @@ namespace Code
             serialFlightInputs.InputsChanged -= OnKeyboardFlightInputsOnInputsChanged;
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            Debug.LogError($"Collided with {other.tag}");
+        }
+
         private void ApplyInputs()
         {
             var inputDiff = GetInputDiff();
