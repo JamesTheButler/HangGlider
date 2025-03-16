@@ -1,19 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Code;
+using Code.Inputs;
 using UnityEngine;
-
-public enum UiState
-{
-    LandingPage,
-    LevelSelectionPage,
-    InLevel
-}
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private FlightInputs flightInputs;
+    private KeyboardFlightInputs keyboardFlightInputs;
 
     [Header("Pages")]
     [SerializeField]
@@ -26,8 +19,13 @@ public class UIManager : MonoBehaviour
     private GameObject inGameUi;
 
     private Dictionary<UiState, GameObject> _pages;
+    private UiState _uiState;
 
-    private UiState UiState { get; set; }
+    private UiState UiState
+    {
+        get => _uiState;
+        set => ChangeUiState(value);
+    }
 
     private void Start()
     {
@@ -35,10 +33,10 @@ public class UIManager : MonoBehaviour
         {
             { UiState.LandingPage, landingPage },
             { UiState.LevelSelectionPage, levelSelectionPage },
-            { UiState.InLevel, inGameUi }
+            { UiState.InGame, inGameUi }
         };
 
-        flightInputs.InputsChanged += OnInputsChanged;
+        keyboardFlightInputs.InputsChanged += OnInputsChanged;
 
         UiState = UiState.LandingPage;
     }
@@ -48,13 +46,11 @@ public class UIManager : MonoBehaviour
         switch (UiState)
         {
             case UiState.LandingPage:
-                landingPage.SetActive(false);
-                levelSelectionPage.SetActive(true);
+                UiState = UiState.InGame;
                 break;
             case UiState.LevelSelectionPage:
-                Debug.LogWarning("Level Selection Input Handling goes here.");
                 break;
-            case UiState.InLevel:
+            case UiState.InGame:
                 // ignore, this is handled by the player
                 break;
             default:
@@ -65,8 +61,6 @@ public class UIManager : MonoBehaviour
     private void ChangeUiState(UiState newPage)
     {
         foreach (var page in _pages.Values) page.SetActive(false);
-
-        UiState = newPage;
 
         _pages[newPage].SetActive(true);
     }

@@ -1,3 +1,4 @@
+using Code.Inputs;
 using UnityEngine;
 
 namespace Code
@@ -5,13 +6,16 @@ namespace Code
     public class GliderController : MonoBehaviour
     {
         [SerializeField]
+        private KeyboardFlightInputs keyboardFlightInputs;
+
+        [SerializeField]
+        private SerialFlightInputs serialFlightInputs;
+
+        [SerializeField]
         private float defaultMoveSpeedInSec = 5f;
 
         [SerializeField]
         private float yawSpeedInDegPerSec = 2f;
-
-        [SerializeField]
-        private float boostMultiplier = 2f;
 
         [Header("Roll")]
         [SerializeField]
@@ -23,13 +27,7 @@ namespace Code
         [SerializeField]
         private float maxRollAngleInDeg = 45f;
 
-        private Inputs _currentInputs = new(0, 0);
-
-        private FlightInputs _flightInputs;
-        private SerialFlightInputs _serialFlightInputs;
-
-        private bool _isBoosting;
-        private int i;
+        private Inputs.Inputs _currentInputs = new(0, 0);
 
         private float CurrentRoll => transform.localRotation.eulerAngles.z.NormalizeAngle();
 
@@ -40,16 +38,15 @@ namespace Code
 
         private void FixedUpdate()
         {
-            var moveSpeed = _isBoosting ? defaultMoveSpeedInSec * boostMultiplier : defaultMoveSpeedInSec;
-            transform.position += transform.forward * (moveSpeed * Time.deltaTime);
+            transform.position += transform.forward * (defaultMoveSpeedInSec * Time.deltaTime);
 
             ApplyInputs();
         }
 
         private void OnDestroy()
         {
-            flightInputs.InputsChanged -= OnFlightInputsOnInputsChanged;
-            flightInputs.BoostChanged -= OnFlightInputsOnBoostChanged;
+            keyboardFlightInputs.InputsChanged -= OnKeyboardFlightInputsOnInputsChanged;
+            serialFlightInputs.InputsChanged -= OnKeyboardFlightInputsOnInputsChanged;
         }
 
         private void ApplyInputs()
@@ -98,7 +95,6 @@ namespace Code
 
         private void Steer(float inputDiff)
         {
-            i++;
             // yaw
             var yaw = yawSpeedInDegPerSec * Time.deltaTime * -inputDiff;
             transform.RotateAround(
@@ -109,22 +105,7 @@ namespace Code
             // roll
             var rollAngle = inputDiff * rollSpeedInDegPerSec * Time.deltaTime;
             var clampedRollAngle = ClampRollAngle(rollAngle);
-
-            if (Mathf.Abs(CurrentRoll) > 40)
-            {
-                Debug.Log($"[{i}] current {CurrentRoll} + {clampedRollAngle} (initial: {rollAngle})");
-            }
-
             Roll(clampedRollAngle);
-
-            if (Mathf.Abs(CurrentRoll) > 40)
-            {
-                Debug.Log($"[{i}] new roll {CurrentRoll}");
-            }
-            // clamp roll
-            //var clampedRoll = Mathf.Clamp(CurrentRoll, -maxRollAngleInDeg, maxRollAngleInDeg);
-            //var currentRot = transform.localRotation;
-            //transform.localRotation = Quaternion.Euler(currentRot.x, currentRot.y, clampedRoll);
         }
 
         private void Roll(float rollAngle)
@@ -157,21 +138,12 @@ namespace Code
 
         private void SetUpFlightControls()
         {
-            _serialFlightInputs = GetComponent<SerialFlightInputs>();
-            _serialFlightInputs.InputsChanged += OnFlightInputsOnInputsChanged;
-
-            _flightInputs = GetComponent<FlightInputs>();
-            _currentInputs = _flightInputs.Inputs;
-            _flightInputs.InputsChanged += OnFlightInputsOnInputsChanged;
-            _flightInputs.BoostChanged += OnFlightInputsOnBoostChanged;
+            serialFlightInputs.InputsChanged += OnKeyboardFlightInputsOnInputsChanged;
+            keyboardFlightInputs.InputsChanged += OnKeyboardFlightInputsOnInputsChanged;
+            _currentInputs = keyboardFlightInputs.Inputs;
         }
 
-        private void OnFlightInputsOnBoostChanged(bool boost)
-        {
-            _isBoosting = boost;
-        }
-
-        private void OnFlightInputsOnInputsChanged(Inputs inputs)
+        private void OnKeyboardFlightInputsOnInputsChanged(Inputs.Inputs inputs)
         {
             _currentInputs = inputs;
         }

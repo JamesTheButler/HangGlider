@@ -1,16 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Code
+namespace Code.Inputs
 {
-    public class FlightInputs : MonoBehaviour, InputActions.IFlightControlsActions
+    public class KeyboardFlightInputs : MonoBehaviour, InputActions.IFlightControlsActions
     {
-        public event ValueChangedHandler<Inputs> InputsChanged;
-        public event ValueChangedHandler<bool> BoostChanged;
+        private InputActions _controls;
 
         public Inputs Inputs { get; private set; } = new(0, 0);
-
-        private InputActions _controls;
 
         public void OnEnable()
         {
@@ -39,5 +36,8 @@ namespace Code
         {
             BoostChanged?.Invoke(context.ReadValueAsButton());
         }
+
+        public event ValueChangedHandler<Inputs> InputsChanged;
+        public event ValueChangedHandler<bool> BoostChanged;
     }
 }
