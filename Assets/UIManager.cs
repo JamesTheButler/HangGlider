@@ -25,7 +25,11 @@ public class UIManager : MonoBehaviour
     private UiState UiState
     {
         get => _uiState;
-        set => ChangeUiState(value);
+        set
+        {
+            ChangeUiState(value);
+            _uiState = value;
+        }
     }
 
     private void Start()
@@ -72,5 +76,8 @@ public class UIManager : MonoBehaviour
 
         var player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<GliderController>().enabled = true;
+
+        var uiMgr = FindAnyObjectByType<InGameUIManager>();
+        uiMgr.Initialize();
     }
 }
