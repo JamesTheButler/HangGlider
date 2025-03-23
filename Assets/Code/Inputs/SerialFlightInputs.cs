@@ -4,39 +4,40 @@ namespace Code.Inputs
 {
     public class SerialFlightInputs : MonoBehaviour
     {
+        [SerializeField]
+        private InputManager inputManager;
+
         private const float Scale = 10;
 
         public bool isInverted = true;
 
         private int _i;
 
-        public event ValueChangedHandler<Inputs> InputsChanged;
-
-        private void OnMessageArrived(string msg)
+        public void OnMessageArrived(string message)
         {
-            if (!msg.Contains(','))
+            if (!message.Contains(','))
             {
                 return;
             }
 
-            Debug.Log(msg);
+            Debug.Log(message);
 
-            var split = msg.Split(",");
+            var split = message.Split(",");
             var left = float.Parse(split[0]) / Scale;
             var right = float.Parse(split[1]) / Scale;
             if (isInverted)
             {
-                InputsChanged?.Invoke(new Inputs(left, right));
+                inputManager.Invoke(new Inputs(left, right));
             }
             else
             {
-                InputsChanged?.Invoke(new Inputs(right, left));
+                inputManager.Invoke(new Inputs(right, left));
             }
         }
 
-        private void OnConnectionEvent(bool success)
+        public void OnConnectionStatusChanged(bool isConnected)
         {
-            Debug.Log("connected?" + success);
+            Debug.Log("connection changed?" + isConnected);
         }
     }
 }

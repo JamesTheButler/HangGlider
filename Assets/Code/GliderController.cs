@@ -1,16 +1,11 @@
 using Code.Inputs;
+using Code.Utility;
 using UnityEngine;
 
 namespace Code
 {
     public class GliderController : MonoBehaviour
     {
-        [SerializeField]
-        private KeyboardFlightInputs keyboardFlightInputs;
-
-        [SerializeField]
-        private SerialFlightInputs serialFlightInputs;
-
         [SerializeField]
         private float defaultMoveSpeedInSec = 5f;
 
@@ -27,12 +22,15 @@ namespace Code
         [SerializeField]
         private float maxRollAngleInDeg = 45f;
 
+        private InputManager _inputManager;
         private Inputs.Inputs _currentInputs = new(0, 0);
 
         private float CurrentRoll => transform.localRotation.eulerAngles.z.NormalizeAngle();
 
         private void Start()
         {
+            _inputManager = Locator.Instance.InputManager;
+
             SetUpFlightControls();
         }
 
@@ -45,8 +43,7 @@ namespace Code
 
         private void OnDestroy()
         {
-            keyboardFlightInputs.InputsChanged -= OnKeyboardFlightInputsOnInputsChanged;
-            serialFlightInputs.InputsChanged -= OnKeyboardFlightInputsOnInputsChanged;
+            _inputManager.InputsChanged -= OnInputsChanged;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -143,12 +140,11 @@ namespace Code
 
         private void SetUpFlightControls()
         {
-            serialFlightInputs.InputsChanged += OnKeyboardFlightInputsOnInputsChanged;
-            keyboardFlightInputs.InputsChanged += OnKeyboardFlightInputsOnInputsChanged;
-            _currentInputs = keyboardFlightInputs.Inputs;
+            OnInputsChanged(_inputManager.CurrentInputs);
+            _inputManager.InputsChanged += OnInputsChanged;
         }
 
-        private void OnKeyboardFlightInputsOnInputsChanged(Inputs.Inputs inputs)
+        private void OnInputsChanged(Inputs.Inputs inputs)
         {
             _currentInputs = inputs;
         }

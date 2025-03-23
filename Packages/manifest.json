@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "ardity": "https://github.com/dwilches/Ardity.git?path=UnityProject/Assets/Ardity",
+    "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
     "com.unity.ai.navigation": "2.0.6",
     "com.unity.cinemachine": "3.1.3",

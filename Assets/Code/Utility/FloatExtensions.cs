@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code
+namespace Code.Utility
 {
     public static class FloatExtensions
     {

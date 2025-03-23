@@ -198,13 +198,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4958252293622466305}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 411087b11cae15c4ebba579349f15f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyboardFlightInputs: {fileID: 0}
-  serialFlightInputs: {fileID: 0}
+  inputManager: {fileID: 0}
   defaultMoveSpeedInSec: 10
   yawSpeedInDegPerSec: 10
   rollSpeedInDegPerSec: 30
