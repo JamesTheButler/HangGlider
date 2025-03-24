@@ -7,7 +7,7 @@ namespace Code
 {
     public class GameManager : MonoBehaviour
     {
-        private string _currentScene;
+        private string _currentLevel;
 
         public GameState CurrentState { get; private set; }
 
@@ -29,19 +29,22 @@ namespace Code
             OnGameStateChanged?.Invoke(newState);
         }
 
+        public void StartGame()
+        {
+            ChangeState(GameState.LevelSelection);
+        }
+
         public void LoadLevel(string levelName)
         {
-            Debug.LogWarning("Level Selection not implemented yet");
             ChangeState(GameState.InGame);
 
-            SceneManager.UnloadSceneAsync(levelName);
+            if (!string.IsNullOrEmpty(_currentLevel))
+            {
+                SceneManager.UnloadSceneAsync(_currentLevel);
+            }
 
-            _currentScene = levelName;
+            _currentLevel = levelName;
             SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
-
-
-            var player = FindPlayer();
-            player.GetComponent<GliderController>().enabled = true;
 
             var uiMgr = FindAnyObjectByType<InGameUIManager>();
             uiMgr.Initialize();
@@ -53,7 +56,7 @@ namespace Code
             Destroy(FindPlayer());
 
             // Remove Level
-            SceneManager.UnloadSceneAsync(_currentScene);
+            SceneManager.UnloadSceneAsync(_currentLevel);
 
             ChangeState(GameState.StartUp);
         }

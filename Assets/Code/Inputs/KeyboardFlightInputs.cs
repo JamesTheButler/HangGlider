@@ -10,7 +10,7 @@ namespace Code.Inputs
 
         private InputActions _controls;
 
-        public Inputs Inputs { get; private set; } = new(0, 0);
+        private Inputs Inputs { get; set; } = new(0, 0);
 
         public void OnEnable()
         {
@@ -21,6 +21,11 @@ namespace Code.Inputs
             }
 
             _controls.FlightControls.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _controls.FlightControls.Disable();
         }
 
         public void OnRight(InputAction.CallbackContext context)

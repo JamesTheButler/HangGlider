@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Code.Inputs;
 using UnityEngine;
@@ -6,6 +7,9 @@ namespace Code.Menus
 {
     public class UIManager : MonoBehaviour
     {
+        [SerializeField]
+        private float postGameResetTime;
+
         [Header("UI Pages")]
         [SerializeField]
         private GameObject landingPage;
@@ -26,6 +30,8 @@ namespace Code.Menus
 
         private InputManager _inputManager;
         private GameManager _gameManager;
+
+        private Coroutine _postGameResetCoroutine;
 
         private void Awake()
         {
@@ -62,6 +68,27 @@ namespace Code.Menus
             DisableAllUi();
 
             _pages[newGameState].SetActive(true);
+
+            if (newGameState == GameState.PostGameFail || newGameState == GameState.PostGameWin)
+            {
+                StartResetTimer();
+            }
+        }
+
+        private void StartResetTimer()
+        {
+            if (_postGameResetCoroutine != null)
+            {
+                StopCoroutine(_postGameResetCoroutine);
+            }
+
+            _postGameResetCoroutine = StartCoroutine(ResetAfterDelay(postGameResetTime));
+        }
+
+        private IEnumerator ResetAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            ResetGame();
         }
 
         private void DisableAllUi()
@@ -73,6 +100,9 @@ namespace Code.Menus
         {
             switch (_gameManager.CurrentState)
             {
+                case GameState.StartUp:
+                    _gameManager.StartGame();
+                    break;
                 case GameState.LevelSelection:
                     LevelSelectionInputs(inputs);
                     break;
@@ -91,6 +121,12 @@ namespace Code.Menus
 
         private void ResetGame()
         {
+            if (_postGameResetCoroutine != null)
+            {
+                StopCoroutine(_postGameResetCoroutine);
+                _postGameResetCoroutine = null;
+            }
+
             _gameManager.ResetGame();
         }
     }

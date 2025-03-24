@@ -4,6 +4,7 @@ namespace Code.Menus
 {
     public class LevelSelectionPage : MonoBehaviour
     {
-        public string currentLevel = "level1";
+        [NaughtyAttributes.Scene]
+        public string currentLevel = "Level_01";
     }
 }
