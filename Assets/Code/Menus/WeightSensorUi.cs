@@ -3,19 +3,19 @@ using UnityEngine;
 
 namespace Code.Menus
 {
-    public class WeightDebugUi : MonoBehaviour
+    public class WeightSensorUi : MonoBehaviour
     {
         private InputManager _inputManager;
 
         [Header("UIs")]
         [SerializeField]
-        private WeightDebuggerEntry left;
+        private WeightSensorEntry left;
 
         [SerializeField]
-        private WeightDebuggerEntry right;
+        private WeightSensorEntry right;
 
         [SerializeField]
-        private WeightDebuggerEntry total;
+        private WeightSensorEntry total;
 
         private void Start()
         {

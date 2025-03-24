@@ -27,6 +27,8 @@ namespace Code
 
         private float CurrentRoll => transform.localRotation.eulerAngles.z.NormalizeAngle();
 
+        #region Lifecycle Methods
+
         private void Start()
         {
             _inputManager = Locator.Instance.InputManager;
@@ -36,6 +38,11 @@ namespace Code
 
         private void FixedUpdate()
         {
+            if (!enabled)
+            {
+                return;
+            }
+
             transform.position += transform.forward * (defaultMoveSpeedInSec * Time.deltaTime);
 
             ApplyInputs();
@@ -48,8 +55,18 @@ namespace Code
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.LogError($"Collided with {other.tag}");
+            switch (other.tag)
+            {
+                case Tags.Environment:
+                    Locator.Instance.GameManager.CollisionWithObstacle();
+                    break;
+                case Tags.Goal:
+                    Locator.Instance.GameManager.CollisionWithGoal();
+                    break;
+            }
         }
+
+        #endregion
 
         private void ApplyInputs()
         {
@@ -119,7 +136,7 @@ namespace Code
         }
 
         /// <summary>
-        ///     Clamp desired roll angle if it would over-rotate.
+        /// Clamp desired roll angle if it would over-rotate.
         /// </summary>
         private float ClampRollAngle(float rollAngle)
         {

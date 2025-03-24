@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Code.Menus
 {
-    public class WeightDebuggerEntry : MonoBehaviour
+    public class WeightSensorEntry : MonoBehaviour
     {
         [SerializeField]
         private TMP_Text kgText;

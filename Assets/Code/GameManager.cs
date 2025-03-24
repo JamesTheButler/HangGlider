@@ -1,5 +1,8 @@
 using System;
 using Code.Menus;
+using Code.Utility;
+using JetBrains.Annotations;
+using Unity.Multiplayer.Center.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -57,13 +60,26 @@ namespace Code
 
             // Remove Level
             SceneManager.UnloadSceneAsync(_currentLevel);
+            _currentLevel = null;
 
             ChangeState(GameState.StartUp);
         }
 
-        private static GameObject FindPlayer()
+        public void CollisionWithObstacle()
         {
-            return GameObject.FindGameObjectWithTag("Player");
+            FindPlayer()?.SetEnabled(false);
+            ChangeState(GameState.PostGameFail);
+        }
+
+        public void CollisionWithGoal()
+        {
+            ChangeState(GameState.PostGameWin);
+        }
+
+        [CanBeNull]
+        private static GliderController FindPlayer()
+        {
+            return GameObject.FindGameObjectWithTag(Tags.Player)?.GetComponent<GliderController>();
         }
     }
 }
