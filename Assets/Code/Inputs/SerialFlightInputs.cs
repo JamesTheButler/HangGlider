@@ -25,14 +25,8 @@ namespace Code.Inputs
             var split = message.Split(",");
             var left = float.Parse(split[0]) / Scale;
             var right = float.Parse(split[1]) / Scale;
-            if (isInverted)
-            {
-                inputManager.Invoke(new Inputs(left, right));
-            }
-            else
-            {
-                inputManager.Invoke(new Inputs(right, left));
-            }
+            
+            inputManager.Invoke(isInverted ? new Inputs(left, right) : new Inputs(right, left));
         }
 
         public void OnConnectionStatusChanged(bool isConnected)
