@@ -23,7 +23,6 @@ namespace Features.Glider
         [SerializeField]
         private float maxRollAngleInDeg = 45f;
 
-
         private InputManager _inputManager;
         private Inputs _currentInputs = new(0, 0);
 

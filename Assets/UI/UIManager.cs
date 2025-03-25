@@ -1,18 +1,15 @@
 using System.Collections.Generic;
 using Core.Management;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UI
 {
     public class UIManager : MonoBehaviour
     {
-        [FormerlySerializedAs("landingPageBase")]
         [Header("UI Pages")]
         [SerializeField]
         private PageBase landingPage;
 
-        [FormerlySerializedAs("levelSelectionPageBase")]
         [SerializeField]
         private PageBase levelSelectionPage;
 

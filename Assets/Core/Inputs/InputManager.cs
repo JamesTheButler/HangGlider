@@ -1,3 +1,4 @@
+using System;
 using Core.Utility;
 using NaughtyAttributes;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Core.Inputs
         [field: ReadOnly]
         public Inputs CurrentInputs { get; private set; }
 
-        public event ValueChangedHandler<Inputs> InputsChanged;
+        public Action<Inputs> InputsChanged;
 
         public void Invoke(Inputs value)
         {
