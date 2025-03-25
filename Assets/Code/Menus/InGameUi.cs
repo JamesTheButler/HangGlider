@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Code.Menus
 {
-    public class InGameUIManager : MonoBehaviour
+    public class InGameUi : Page
     {
         [SerializeField]
         private TMP_Text timerText;
@@ -18,7 +18,7 @@ namespace Code.Menus
             timerText.text = $"{timeDiff.Minutes:D2}:{timeDiff.Seconds:D2}";
         }
 
-        public void Initialize()
+        protected override void OnOpen()
         {
             _startTime = DateTime.Now;
         }

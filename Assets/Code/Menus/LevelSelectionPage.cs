@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Code.Menus
 {
-    public class LevelSelectionPage : MonoBehaviour
+    public class LevelSelectionPage : Page
     {
         [SerializeField]
         private UIInputManager uiInputs;
@@ -21,10 +21,14 @@ namespace Code.Menus
         private int _currentLevelIndex;
         private readonly List<LevelButton> _levelButtons = new();
 
-        private void Start()
+        private void OnEnable()
         {
-            foreach (var level in levelSelectionData.Levels) AddLevelButton(level);
+            foreach (var level in levelSelectionData.Levels)
+                AddLevelButton(level);
+        }
 
+        protected override void OnOpen()
+        {
             uiInputs.LeftClicked += LeftClicked;
             uiInputs.RightClicked += RightClicked;
             uiInputs.ConfirmClicked += ConfirmClicked;
@@ -32,9 +36,11 @@ namespace Code.Menus
             Select(_currentLevelIndex);
         }
 
-        public string GetSelectedLevel()
+        protected override void OnClose()
         {
-            return levelSelectionData.Levels[_currentLevelIndex].Scene;
+            uiInputs.LeftClicked -= LeftClicked;
+            uiInputs.RightClicked -= RightClicked;
+            uiInputs.ConfirmClicked -= ConfirmClicked;
         }
 
         private void AddLevelButton(LevelData level)
@@ -59,13 +65,6 @@ namespace Code.Menus
             var newPair = _levelButtons[levelIndex];
             newPair.SetHighlighted(true);
             _currentLevelIndex = levelIndex;
-        }
-
-        private void OnDisable()
-        {
-            uiInputs.LeftClicked -= LeftClicked;
-            uiInputs.RightClicked -= RightClicked;
-            uiInputs.ConfirmClicked -= ConfirmClicked;
         }
 
         private void ConfirmClicked()

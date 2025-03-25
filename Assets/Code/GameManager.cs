@@ -48,9 +48,6 @@ namespace Code
 
             _currentLevel = levelName;
             SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
-
-            var uiMgr = FindAnyObjectByType<InGameUIManager>();
-            uiMgr.Initialize();
         }
 
         public void ResetGame()

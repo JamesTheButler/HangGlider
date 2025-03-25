@@ -1,41 +1,34 @@
-using System.Collections;
 using System.Collections.Generic;
-using Code.Inputs;
 using UnityEngine;
 
 namespace Code.Menus
 {
     public class UIManager : MonoBehaviour
     {
-        [SerializeField]
-        private float postGameResetTime;
-
         [Header("UI Pages")]
         [SerializeField]
-        private GameObject landingPage;
+        private Page landingPage;
 
         [SerializeField]
-        private GameObject levelSelectionPage;
+        private Page levelSelectionPage;
 
         [SerializeField]
-        private GameObject inGameUi;
+        private Page inGameUi;
 
         [SerializeField]
-        private GameObject levelFailedUi;
+        private Page levelWonUi;
 
         [SerializeField]
-        private GameObject levelWonUi;
+        private Page levelFailedUi;
 
-        private Dictionary<GameState, GameObject> _pages;
+        private Dictionary<GameState, Page> _pages;
 
-        private InputManager _inputManager;
         private GameManager _gameManager;
 
-        private Coroutine _postGameResetCoroutine;
 
         private void Awake()
         {
-            _pages = new Dictionary<GameState, GameObject>
+            _pages = new Dictionary<GameState, Page>
             {
                 { GameState.StartUp, landingPage },
                 { GameState.LevelSelection, levelSelectionPage },
@@ -46,10 +39,7 @@ namespace Code.Menus
 
             DisableAllUi();
 
-            _inputManager = Locator.Instance.InputManager;
             _gameManager = Locator.Instance.GameManager;
-
-            _inputManager.InputsChanged += OnInputManagerChanged;
         }
 
         private void Start()
@@ -67,58 +57,13 @@ namespace Code.Menus
         {
             DisableAllUi();
 
-            _pages[newGameState].SetActive(true);
-
-            if (newGameState is GameState.PostGameFail or GameState.PostGameWin)
-            {
-                StartResetTimer();
-            }
-        }
-
-        private void StartResetTimer()
-        {
-            if (_postGameResetCoroutine != null)
-            {
-                StopCoroutine(_postGameResetCoroutine);
-            }
-
-            _postGameResetCoroutine = StartCoroutine(ResetAfterDelay(postGameResetTime));
-        }
-
-        private IEnumerator ResetAfterDelay(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            ResetGame();
+            _pages[newGameState].Open();
         }
 
         private void DisableAllUi()
         {
-            foreach (var page in _pages.Values) page.SetActive(false);
-        }
-
-        // TODO: this should be entirely handled by each page
-        private void OnInputManagerChanged(Inputs.Inputs inputs)
-        {
-            switch (_gameManager.CurrentState)
-            {
-                case GameState.StartUp:
-                    _gameManager.StartGame();
-                    break;
-                case GameState.PostGameFail or GameState.PostGameWin:
-                    ResetGame();
-                    break;
-            }
-        }
-
-        private void ResetGame()
-        {
-            if (_postGameResetCoroutine != null)
-            {
-                StopCoroutine(_postGameResetCoroutine);
-                _postGameResetCoroutine = null;
-            }
-
-            _gameManager.ResetGame();
+            foreach (var page in _pages.Values)
+                page.Close();
         }
     }
 }

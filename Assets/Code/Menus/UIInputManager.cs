@@ -17,10 +17,10 @@ namespace Code.Menus
             inputManager.InputsChanged += OnInputsChanged;
         }
 
+        private Inputs.Inputs _previousInputs;
+
         private void OnInputsChanged(Inputs.Inputs newInputs)
         {
-            // do processing here to invoke the actions
-            AnythingClicked?.Invoke();
         }
     }
 }
