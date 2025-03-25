@@ -69,7 +69,7 @@ namespace Code.Menus
 
             _pages[newGameState].SetActive(true);
 
-            if (newGameState == GameState.PostGameFail || newGameState == GameState.PostGameWin)
+            if (newGameState is GameState.PostGameFail or GameState.PostGameWin)
             {
                 StartResetTimer();
             }
@@ -96,6 +96,7 @@ namespace Code.Menus
             foreach (var page in _pages.Values) page.SetActive(false);
         }
 
+        // TODO: this should be entirely handled by each page
         private void OnInputManagerChanged(Inputs.Inputs inputs)
         {
             switch (_gameManager.CurrentState)
@@ -103,20 +104,10 @@ namespace Code.Menus
                 case GameState.StartUp:
                     _gameManager.StartGame();
                     break;
-                case GameState.LevelSelection:
-                    LevelSelectionInputs(inputs);
-                    break;
                 case GameState.PostGameFail or GameState.PostGameWin:
                     ResetGame();
                     break;
             }
-        }
-
-        private void LevelSelectionInputs(Inputs.Inputs inputs)
-        {
-            var levelSelection = _pages[GameState.LevelSelection].GetComponent<LevelSelectionPage>();
-            _gameManager.LoadLevel(levelSelection.currentLevel);
-            // TODO: navigate with left/right tug and confirm with hanging
         }
 
         private void ResetGame()

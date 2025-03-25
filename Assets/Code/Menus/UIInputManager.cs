@@ -5,10 +5,10 @@ namespace Code.Menus
 {
     public class UIInputManager : MonoBehaviour
     {
-        public Action LeftClicked { get; private set; }
-        public Action RightClicked { get; private set; }
-        public Action ConfirmClicked { get; private set; }
-        public Action AnythingClicked { get; private set; }
+        public Action LeftClicked { get; set; }
+        public Action RightClicked { get; set; }
+        public Action ConfirmClicked { get; set; }
+        public Action AnythingClicked { get; set; }
 
         private void Start()
         {

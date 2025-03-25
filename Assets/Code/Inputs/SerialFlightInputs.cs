@@ -11,8 +11,6 @@ namespace Code.Inputs
 
         public bool isInverted = true;
 
-        private int _i;
-
         public void OnMessageArrived(string message)
         {
             if (!message.Contains(','))
@@ -25,7 +23,7 @@ namespace Code.Inputs
             var split = message.Split(",");
             var left = float.Parse(split[0]) / Scale;
             var right = float.Parse(split[1]) / Scale;
-            
+
             inputManager.Invoke(isInverted ? new Inputs(left, right) : new Inputs(right, left));
         }
 

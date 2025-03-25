@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91716ebb4894a3fbfba99060e9309a8, type: 3}
-  m_Name: Levels
+  m_Script: {fileID: 11500000, guid: a2d096d1de9b48c0a5c05d3cbf62a367, type: 3}
+  m_Name: Level Selection Data
   m_EditorClassIdentifier: 
-  level1: GameScene
-  level2: GameScene
+  <Levels>k__BackingField:
+  - {fileID: 11400000, guid: 071fe38247f2e1b48bcf18c566b312f6, type: 2}
+  - {fileID: 11400000, guid: f9774db8406caa340a05cb3d13356d00, type: 2}
