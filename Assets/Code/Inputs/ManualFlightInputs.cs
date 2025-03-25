@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -64,18 +63,18 @@ namespace Code.Inputs
         public void OnRight(InputAction.CallbackContext context)
         {
             var inputAxis = context.ReadValue<float>();
-            Inputs = Inputs with { Right = RemapInput(inputAxis) };
+            Inputs = Inputs.Copy(newRight: RemapInput(inputAxis));
         }
 
         public void OnLeft(InputAction.CallbackContext context)
         {
             var inputAxis = context.ReadValue<float>();
-            Inputs = Inputs with { Left = RemapInput(inputAxis) };
+            Inputs = Inputs.Copy(RemapInput(inputAxis));
         }
 
-        // -1 => full weight
-        // 0 => half weight
         // 1 => 0
+        // 0 => half weight
+        // -1 => full weight
         private float RemapInput(float inputAxis)
         {
             var halfWeight = simulatedWeightKg * 0.5f;

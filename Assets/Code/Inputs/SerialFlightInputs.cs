@@ -7,29 +7,27 @@ namespace Code.Inputs
         [SerializeField]
         private InputManager inputManager;
 
-        private const float Scale = 10;
-
-        public bool isInverted = true;
+        [SerializeField]
+        private float weightAmplifier;
 
         public void OnMessageArrived(string message)
         {
+            Debug.Log(message);
             if (!message.Contains(','))
             {
                 return;
             }
 
-            Debug.Log(message);
-
             var split = message.Split(",");
-            var left = float.Parse(split[0]) / Scale;
-            var right = float.Parse(split[1]) / Scale;
+            var left = float.Parse(split[0]) * weightAmplifier;
+            var right = float.Parse(split[1]) * weightAmplifier;
 
-            inputManager.Invoke(isInverted ? new Inputs(left, right) : new Inputs(right, left));
+            inputManager.Invoke(new Inputs(left, right));
         }
 
         public void OnConnectionStatusChanged(bool isConnected)
         {
-            Debug.Log("connection changed?" + isConnected);
+            Debug.Log($"connection changed to '{isConnected}'");
         }
     }
 }

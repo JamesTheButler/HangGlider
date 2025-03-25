@@ -9,6 +9,15 @@ namespace Code.Menus
 
         private GameManager _gameManager;
 
+        // back up manual input
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StartGame();
+            }
+        }
+
         protected override void OnOpen()
         {
             base.OnOpen();

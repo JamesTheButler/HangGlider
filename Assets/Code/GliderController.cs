@@ -22,6 +22,7 @@ namespace Code
         [SerializeField]
         private float maxRollAngleInDeg = 45f;
 
+
         private InputManager _inputManager;
         private Inputs.Inputs _currentInputs = new(0, 0);
 
@@ -168,7 +169,7 @@ namespace Code
 
         private float GetInputDiff()
         {
-            return _currentInputs.Right - _currentInputs.Left;
+            return (_currentInputs.left - _currentInputs.right) / (_inputManager.PlayerWeight * .5f);
         }
 
         #endregion

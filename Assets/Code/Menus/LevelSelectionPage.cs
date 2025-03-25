@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Code.Menus
 {
@@ -21,10 +23,19 @@ namespace Code.Menus
         private int _currentLevelIndex;
         private readonly List<LevelButton> _levelButtons = new();
 
-        private void OnEnable()
+        private void Awake()
         {
             foreach (var level in levelSelectionData.Levels)
                 AddLevelButton(level);
+        }
+
+        // back up input
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ConfirmClicked();
+            }
         }
 
         protected override void OnOpen()

@@ -25,14 +25,14 @@ namespace Code.Menus
 
         private void UpdateUI(Inputs.Inputs inputs)
         {
-            var totals = Mathf.Abs(inputs.Right) + Mathf.Abs(inputs.Left);
+            var totals = Mathf.Abs(inputs.right) + Mathf.Abs(inputs.left);
 
-            left.SetKg(inputs.Left);
-            var leftPercent = inputs.Left / totals * 100f;
+            left.SetKg(inputs.left);
+            var leftPercent = inputs.left / totals * 100f;
             left.SetPercent(float.IsNaN(leftPercent) ? 0f : leftPercent);
 
-            right.SetKg(inputs.Right);
-            var rightPercent = inputs.Right / totals * 100f;
+            right.SetKg(inputs.right);
+            var rightPercent = inputs.right / totals * 100f;
             right.SetPercent(float.IsNaN(rightPercent) ? 0f : rightPercent);
 
             total.SetKg(totals);
