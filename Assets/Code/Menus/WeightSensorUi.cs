@@ -36,7 +36,8 @@ namespace Code.Menus
             right.SetPercent(float.IsNaN(rightPercent) ? 0f : rightPercent);
 
             total.SetKg(totals);
-            total.SetPercent(totals / totals * 100f);
+            var totalsPercent = totals > 0 ? 100f : 0f;
+            total.SetPercent(totalsPercent);
         }
     }
 }
