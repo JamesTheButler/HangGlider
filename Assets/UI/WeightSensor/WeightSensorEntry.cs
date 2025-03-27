@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
@@ -5,10 +6,10 @@ namespace UI.WeightSensor
 {
     public class WeightSensorEntry : MonoBehaviour
     {
-        [SerializeField]
+        [Required, SerializeField]
         private TMP_Text kgText;
 
-        [SerializeField]
+        [Required, SerializeField]
         private TMP_Text percentText;
 
         public void SetPercent(float percent)

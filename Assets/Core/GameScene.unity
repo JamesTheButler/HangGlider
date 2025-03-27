@@ -958,6 +958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e4afeaca0ce9d4dbca2fec3187c84f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 1279819656}
   left: {fileID: 3692123473077487683}
   right: {fileID: 1515293489}
   total: {fileID: 166254392}
@@ -7614,6 +7615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiInputManager: {fileID: 1679920629}
+  gameManager: {fileID: 1740090928}
   postGameResetTimeInSec: 10
 --- !u!1 &656603297
 GameObject:
@@ -12135,6 +12137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiInputManager: {fileID: 1679920629}
+  gameManager: {fileID: 1740090928}
 --- !u!1 &1678872841
 GameObject:
   m_ObjectHideFlags: 0
@@ -13425,6 +13428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiInputManager: {fileID: 1679920629}
+  gameManager: {fileID: 1740090928}
   postGameResetTimeInSec: 10
 --- !u!1 &2053739643 stripped
 GameObject:
@@ -13556,6 +13560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiInputs: {fileID: 1679920629}
+  gameManager: {fileID: 1740090928}
   levelSelectionData: {fileID: 11400000, guid: 83ce26fd06779ba46adbbf7f03a27fb7, type: 2}
   rootElement: {fileID: 763565067}
   levelButtonPrefab: {fileID: 870841500976259176, guid: abe4f7a207339ff4d85c05eaa1945145, type: 3}

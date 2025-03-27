@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace UI
 {
     public class InGameUi : PageBase
     {
-        [SerializeField]
+        [Required, SerializeField]
         private TMP_Text timerText;
 
         private DateTime _startTime;

@@ -6,8 +6,7 @@ namespace UI
 {
     public class UIManager : MonoBehaviour
     {
-        [Header("UI Pages")]
-        [SerializeField]
+        [Header("UI Pages"), SerializeField]
         private PageBase landingPage;
 
         [SerializeField]

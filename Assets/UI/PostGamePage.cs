@@ -1,24 +1,26 @@
 using System.Collections;
 using Core.Inputs;
 using Core.Management;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace UI
 {
     public class PostGamePage : PageBase
     {
-        [SerializeField]
+        [Required, SerializeField]
         private UIInputManager uiInputManager;
+
+        [Required, SerializeField]
+        private GameManager gameManager;
 
         [SerializeField]
         private float postGameResetTimeInSec;
 
         private Coroutine _postGameResetCoroutine;
-        private GameManager _gameManager;
 
         protected override void OnOpen()
         {
-            _gameManager = Locator.Instance.GameManager;
             uiInputManager.AnythingClicked += ResetGame;
             StartResetTimer();
         }
@@ -26,7 +28,7 @@ namespace UI
         protected override void OnClose()
         {
             uiInputManager.AnythingClicked -= ResetGame;
-            _gameManager = null;
+            gameManager = null;
         }
 
         private void ResetGame()
@@ -37,7 +39,7 @@ namespace UI
                 _postGameResetCoroutine = null;
             }
 
-            _gameManager.ResetGame();
+            gameManager.ResetGame();
         }
 
         private void StartResetTimer()

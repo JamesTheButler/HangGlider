@@ -1,27 +1,26 @@
 using Core.Inputs;
-using Core.Management;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace UI.WeightSensor
 {
     public class WeightSensorUi : MonoBehaviour
     {
-        private InputManager _inputManager;
+        [Required, SerializeField]
+        private InputManager inputManager;
 
-        [Header("UIs")]
-        [SerializeField]
+        [Header("UIs"), Required, SerializeField]
         private WeightSensorEntry left;
 
-        [SerializeField]
+        [Required, SerializeField]
         private WeightSensorEntry right;
 
-        [SerializeField]
+        [Required, SerializeField]
         private WeightSensorEntry total;
 
         private void Start()
         {
-            _inputManager = Locator.Instance.InputManager;
-            _inputManager.InputsChanged += UpdateUI;
+            inputManager.InputsChanged += UpdateUI;
         }
 
         private void UpdateUI(Inputs inputs)

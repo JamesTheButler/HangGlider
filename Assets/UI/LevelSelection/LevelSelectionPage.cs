@@ -2,24 +2,27 @@ using System.Collections.Generic;
 using System.Linq;
 using Core.Inputs;
 using Core.Management;
-using Levels;
 using Levels.Data;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace UI.LevelSelection
 {
     public class LevelSelectionPage : PageBase
     {
-        [SerializeField]
+        [Required, SerializeField]
         private UIInputManager uiInputs;
 
-        [SerializeField]
+        [Required, SerializeField]
+        private GameManager gameManager;
+
+        [Required, SerializeField]
         private LevelSelectionData levelSelectionData;
 
-        [SerializeField]
+        [Required, SerializeField]
         private GameObject rootElement;
 
-        [SerializeField]
+        [Required, SerializeField]
         private GameObject levelButtonPrefab;
 
         private int? _currentLevelIndex;
@@ -93,7 +96,7 @@ namespace UI.LevelSelection
 
             var nextLevelData = levelSelectionData.Levels[_currentLevelIndex.Value];
             Debug.Log($"Loading level '{nextLevelData.Name}'...");
-            Locator.Instance.GameManager.LoadLevel(nextLevelData.Scene);
+            gameManager.LoadLevel(nextLevelData.Scene);
         }
 
         private void RightClicked()

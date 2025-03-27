@@ -1,15 +1,17 @@
 using Core.Inputs;
 using Core.Management;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace UI
 {
     public class LandingPage : PageBase
     {
-        [SerializeField]
+        [Required, SerializeField]
         private UIInputManager uiInputManager;
 
-        private GameManager _gameManager;
+        [Required, SerializeField]
+        private GameManager gameManager;
 
         // back up manual input
         private void Update()
@@ -23,7 +25,6 @@ namespace UI
         protected override void OnOpen()
         {
             base.OnOpen();
-            _gameManager = Locator.Instance.GameManager;
             uiInputManager.AnythingClicked += StartGame;
         }
 
@@ -35,7 +36,7 @@ namespace UI
 
         private void StartGame()
         {
-            _gameManager.StartGame();
+            gameManager.StartGame();
         }
     }
 }

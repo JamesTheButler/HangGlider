@@ -69,6 +69,7 @@ namespace Core.Management
 
         public void CollisionWithGoal()
         {
+            FindPlayer()?.SetEnabled(false);
             ChangeState(GameState.PostGameWin);
         }
 
