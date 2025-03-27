@@ -22,7 +22,7 @@ namespace UI.LevelSelection
         [SerializeField]
         private GameObject levelButtonPrefab;
 
-        private int _currentLevelIndex;
+        private int? _currentLevelIndex;
         private readonly List<LevelButton> _levelButtons = new();
 
         private void Awake()
@@ -31,7 +31,7 @@ namespace UI.LevelSelection
                 AddLevelButton(level);
         }
 
-        // back up input
+        // back-up input
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -46,7 +46,8 @@ namespace UI.LevelSelection
             uiInputs.RightClicked += RightClicked;
             uiInputs.ConfirmClicked += ConfirmClicked;
 
-            Select(_currentLevelIndex);
+            // select first
+            Select(0);
         }
 
         protected override void OnClose()
@@ -72,8 +73,11 @@ namespace UI.LevelSelection
                 return;
             }
 
-            var oldButton = _levelButtons.ElementAt(_currentLevelIndex);
-            oldButton.SetHighlighted(false);
+            if (_currentLevelIndex is not null)
+            {
+                var oldButton = _levelButtons.ElementAt(_currentLevelIndex.Value);
+                oldButton.SetHighlighted(false);
+            }
 
             var newPair = _levelButtons[levelIndex];
             newPair.SetHighlighted(true);
@@ -82,14 +86,19 @@ namespace UI.LevelSelection
 
         private void ConfirmClicked()
         {
-            var nextLevelData = levelSelectionData.Levels[_currentLevelIndex];
+            if (_currentLevelIndex is null)
+            {
+                return;
+            }
+
+            var nextLevelData = levelSelectionData.Levels[_currentLevelIndex.Value];
             Debug.Log($"Loading level '{nextLevelData.Name}'...");
             Locator.Instance.GameManager.LoadLevel(nextLevelData.Scene);
         }
 
         private void RightClicked()
         {
-            var newIndex = _currentLevelIndex + 1;
+            var newIndex = (_currentLevelIndex ?? 0) + 1;
             if (newIndex >= _levelButtons.Count)
             {
                 return;
@@ -100,7 +109,7 @@ namespace UI.LevelSelection
 
         private void LeftClicked()
         {
-            var newIndex = _currentLevelIndex - 1;
+            var newIndex = (_currentLevelIndex ?? 0) - 1;
             if (newIndex < 0)
             {
                 return;
