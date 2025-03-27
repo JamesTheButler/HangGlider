@@ -1,7 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Levels
+namespace Levels.Data
 {
     [CreateAssetMenu(menuName = "Hang Glider/Create LevelData")]
     public class LevelData : ScriptableObject

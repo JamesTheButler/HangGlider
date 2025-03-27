@@ -1,6 +1,6 @@
 using System;
 using Core.Utility;
-using Features.Glider;
+using Features.Player;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;

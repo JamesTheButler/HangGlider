@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Levels
+namespace Levels.Data
 {
     [CreateAssetMenu(menuName = "Hang Glider/Create LevelSelectionData")]
     public class LevelSelectionData : ScriptableObject

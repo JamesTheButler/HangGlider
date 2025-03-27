@@ -3,7 +3,7 @@ using Core.Management;
 using Core.Utility;
 using UnityEngine;
 
-namespace Features.Glider
+namespace Features.Player
 {
     public class GliderController : MonoBehaviour
     {

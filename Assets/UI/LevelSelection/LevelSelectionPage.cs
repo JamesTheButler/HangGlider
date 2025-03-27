@@ -3,6 +3,7 @@ using System.Linq;
 using Core.Inputs;
 using Core.Management;
 using Levels;
+using Levels.Data;
 using UnityEngine;
 
 namespace UI.LevelSelection
