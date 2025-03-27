@@ -10754,8 +10754,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentInputs>k__BackingField:
-    left: 0
-    right: 0
+    <Left>k__BackingField: 0
+    <Right>k__BackingField: 0
 --- !u!1 &1281710203 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3020873269842242051, guid: a5a61a1e2f88b4d45941aa6d8d6fba52, type: 3}

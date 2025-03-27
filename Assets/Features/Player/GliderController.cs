@@ -13,8 +13,7 @@ namespace Features.Player
         [SerializeField]
         private float yawSpeedInDegPerSec = 2f;
 
-        [Header("Roll")]
-        [SerializeField]
+        [Header("Roll"), SerializeField]
         private float rollSpeedInDegPerSec = 2f;
 
         [SerializeField]
@@ -169,7 +168,7 @@ namespace Features.Player
 
         private float GetInputDiff()
         {
-            return (_currentInputs.left - _currentInputs.right) / (_inputManager.PlayerWeight * .5f);
+            return (_currentInputs.Left - _currentInputs.Right) / (_inputManager.PlayerWeight * .5f);
         }
 
         #endregion

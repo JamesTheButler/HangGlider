@@ -25,8 +25,8 @@ namespace Core.Inputs
 
         private void OnInputsChanged(Inputs newInputs)
         {
-            var isLeftClicked = DetectClick(_previousInputs?.left ?? 0f, newInputs.left);
-            var isRightClicked = DetectClick(_previousInputs?.right ?? 0f, newInputs.right);
+            var isLeftClicked = DetectClick(_previousInputs?.Left ?? 0f, newInputs.Left);
+            var isRightClicked = DetectClick(_previousInputs?.Right ?? 0f, newInputs.Right);
 
             if (isLeftClicked && isRightClicked)
             {
