@@ -1,7 +1,6 @@
 using Core.Inputs;
 using Core.Management;
 using Core.Utility;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Features.Player
@@ -23,6 +22,8 @@ namespace Features.Player
         [SerializeField]
         private float maxRollAngleInDeg = 45f;
 
+        private bool _isFlying;
+
         private InputManager _inputManager;
         private GameManager _gameManager;
         private Inputs _currentInputs = new(0, 0);
@@ -39,7 +40,7 @@ namespace Features.Player
 
         private void FixedUpdate()
         {
-            if (!enabled)
+            if (!enabled || !_isFlying)
                 return;
 
             transform.position += transform.forward * (defaultMoveSpeedInSec * Time.deltaTime);
@@ -56,6 +57,7 @@ namespace Features.Player
         public void StartFlight()
         {
             SetUpFlightControls();
+            _isFlying = true;
         }
 
         private void OnPlayerHangingChanged(bool isHanging)

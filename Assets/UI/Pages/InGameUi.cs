@@ -13,6 +13,9 @@ namespace UI.Pages
         private TMP_Text timerText;
 
         [Required, SerializeField]
+        private GameObject countDownOverlay;
+
+        [Required, SerializeField]
         private TMP_Text countDownText;
 
         private DateTime _startTime;
@@ -39,7 +42,7 @@ namespace UI.Pages
                 StopCoroutine(_countDownCoroutine);
                 _countDownCoroutine = null;
                 // just in case
-                countDownText.gameObject.SetActive(false);
+                countDownOverlay.gameObject.SetActive(false);
             }
 
             base.OnClose();
@@ -47,7 +50,7 @@ namespace UI.Pages
 
         private IEnumerator CountDown()
         {
-            countDownText.gameObject.SetActive(true);
+            countDownOverlay.gameObject.SetActive(true);
             countDownText.text = "3";
             yield return new WaitForSeconds(1);
             countDownText.text = "2";
@@ -57,7 +60,7 @@ namespace UI.Pages
             countDownText.text = "GO!";
             Finder.PlayerController?.StartFlight();
             yield return new WaitForSeconds(1);
-            countDownText.gameObject.SetActive(false);
+            countDownOverlay.gameObject.SetActive(false);
         }
     }
 }
