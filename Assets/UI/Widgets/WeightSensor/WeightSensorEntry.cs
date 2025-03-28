@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
-namespace UI.WeightSensor
+namespace UI.Widgets.WeightSensor
 {
     public class WeightSensorEntry : MonoBehaviour
     {

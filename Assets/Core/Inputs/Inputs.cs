@@ -1,4 +1,5 @@
 using System;
+using Core.Utility;
 using UnityEngine;
 
 namespace Core.Inputs
@@ -21,6 +22,11 @@ namespace Core.Inputs
         public Inputs Copy(float? newLeft = null, float? newRight = null)
         {
             return new Inputs(newLeft ?? Left, newRight ?? Right);
+        }
+
+        public bool IsApproximatelyZero()
+        {
+            return Left.IsApproximatelyZero() && Right.IsApproximatelyZero();
         }
     }
 }

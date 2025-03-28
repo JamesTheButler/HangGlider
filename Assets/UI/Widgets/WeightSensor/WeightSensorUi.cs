@@ -2,7 +2,7 @@ using Core.Inputs;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace UI.WeightSensor
+namespace UI.Widgets.WeightSensor
 {
     public class WeightSensorUi : MonoBehaviour
     {

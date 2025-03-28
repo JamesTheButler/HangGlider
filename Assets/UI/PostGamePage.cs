@@ -28,7 +28,6 @@ namespace UI
         protected override void OnClose()
         {
             uiInputManager.AnythingClicked -= ResetGame;
-            gameManager = null;
         }
 
         private void ResetGame()
