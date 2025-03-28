@@ -13,10 +13,10 @@ namespace Core.Inputs
         [SerializeField]
         private float hangingChangeDelayInMs = 200;
 
-        [field: SerializeField, ReadOnly]
+        [field: SerializeField, ReadOnly, Foldout("Debugging")]
         public Inputs CurrentInputs { get; private set; }
 
-        [field: SerializeField, ReadOnly]
+        [field: SerializeField, ReadOnly, Foldout("Debugging")]
         public bool IsPlayerHanging { get; private set; }
 
         public Action<Inputs> InputsChanged { get; set; }
@@ -39,9 +39,8 @@ namespace Core.Inputs
 
         private void ChangeIsPlayerHanging(bool newIsPlayerHanging)
         {
-            var old = IsPlayerHanging ? "hanging" : "not hanging";
-            var @new = newIsPlayerHanging ? "hanging" : "not hanging";
-            Debug.LogError($"Player changed from {old} to {@new}");
+            if (IsPlayerHanging == newIsPlayerHanging)
+                return;
 
             IsPlayerHanging = newIsPlayerHanging;
             IsPlayerHangingChanged?.Invoke(newIsPlayerHanging);
@@ -52,7 +51,7 @@ namespace Core.Inputs
         private void CheckIfIsHangingChanged(Inputs newInputs)
         {
             // detect if we have to change the hanging state
-            if (newInputs.IsApproximatelyZero() && IsPlayerHanging)
+            if (newInputs.IsApproximatelyZero())
             {
                 // Cancel non-zero coroutine if it's running
                 if (_startedHangingCheckCoroutine != null)
@@ -64,7 +63,7 @@ namespace Core.Inputs
                 // Start zero-check coroutine only if it's not already running
                 _stoppedHangingCheckCoroutine ??= StartCoroutine(StoppedHanging());
             }
-            else if (!newInputs.IsApproximatelyZero() && !IsPlayerHanging)
+            else
             {
                 // Cancel zero-check coroutine if it's running
                 if (_stoppedHangingCheckCoroutine != null)
