@@ -48,7 +48,7 @@ namespace Core.Management
         public void ResetGame()
         {
             // despawn player
-            Destroy(FindPlayer());
+            Destroy(Finder.Player);
 
             // Remove Level
             SceneManager.UnloadSceneAsync(_currentLevel);
@@ -59,26 +59,20 @@ namespace Core.Management
 
         public void CollisionWithObstacle()
         {
-            FindPlayer()?.SetEnabled(false);
+            Finder.PlayerController?.SetEnabled(false);
             ChangeState(GameState.PostGameFail);
         }
 
         public void CollisionWithGoal()
         {
-            FindPlayer()?.SetEnabled(false);
+            Finder.PlayerController?.SetEnabled(false);
             ChangeState(GameState.PostGameWin);
         }
 
         public void PlayerLetGo()
         {
-            FindPlayer()?.SetEnabled(false);
+            Finder.PlayerController?.SetEnabled(false);
             ChangeState(GameState.PostGameFail);
-        }
-
-        [CanBeNull]
-        private static GliderController FindPlayer()
-        {
-            return GameObject.FindGameObjectWithTag(Tags.Player)?.GetComponent<GliderController>();
         }
     }
 }

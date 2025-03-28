@@ -1,6 +1,7 @@
 using Core.Inputs;
 using Core.Management;
 using Core.Utility;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Features.Player
@@ -34,8 +35,6 @@ namespace Features.Player
         {
             _inputManager = Locator.Instance.InputManager;
             _gameManager = Locator.Instance.GameManager;
-
-            SetUpFlightControls();
         }
 
         private void FixedUpdate()
@@ -52,6 +51,11 @@ namespace Features.Player
         {
             _inputManager.InputsChanged -= OnInputsChanged;
             _inputManager.IsPlayerHangingChanged -= OnPlayerHangingChanged;
+        }
+
+        public void StartFlight()
+        {
+            SetUpFlightControls();
         }
 
         private void OnPlayerHangingChanged(bool isHanging)

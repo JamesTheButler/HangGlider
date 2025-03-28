@@ -25,9 +25,10 @@ namespace UI.Pages
 
         public void Close()
         {
+            gameObject.SetActive(false);
+
             if (!_isOpen) return;
 
-            gameObject.SetActive(false);
             OnClose();
             _isOpen = false;
         }
