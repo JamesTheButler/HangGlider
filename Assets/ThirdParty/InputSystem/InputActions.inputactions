@@ -9,7 +9,7 @@
                     "name": "Right",
                     "type": "Value",
                     "id": "12f40a84-b976-45d0-bc85-60586420ac4f",
-                    "expectedControlType": "Analog",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -22,15 +22,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Boost",
-                    "type": "Button",
-                    "id": "94a78c73-78d2-49d2-a8f6-f36f2917fcdc",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -121,26 +112,32 @@
                     "action": "Left",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "cf2164ea-d3f2-4b32-9e1b-9450d22f1254",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "723d9c4b-b6a5-403f-b172-78bc23900c57",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "b84cefeb-e3a1-4e82-8419-ce7f8adfe3b8",
+                    "id": "dbeb76a9-d63e-4fd4-a272-b568cc9be8c6",
                     "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Boost",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d4364d1e-067f-4f04-a2ad-c18440253014",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Boost",
+                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

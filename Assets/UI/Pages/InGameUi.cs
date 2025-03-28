@@ -3,7 +3,7 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
-namespace UI
+namespace UI.Pages
 {
     public class InGameUi : PageBase
     {

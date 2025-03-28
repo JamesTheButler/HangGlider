@@ -3,7 +3,7 @@ using Core.Management;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace UI
+namespace UI.Pages
 {
     public class LandingPage : PageBase
     {
@@ -13,14 +13,8 @@ namespace UI
         [Required, SerializeField]
         private GameManager gameManager;
 
-        // back up manual input
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                StartGame();
-            }
-        }
+        [SerializeField]
+        private int inputBlockInMs;
 
         protected override void OnOpen()
         {
@@ -32,6 +26,13 @@ namespace UI
         {
             base.OnClose();
             uiInputManager.AnythingClicked -= StartGame;
+        }
+
+        // back up manual input
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                StartGame();
         }
 
         private void StartGame()

@@ -2,7 +2,7 @@ using Levels.Data;
 using TMPro;
 using UnityEngine;
 
-namespace UI.LevelSelection
+namespace UI.Pages.LevelSelection
 {
     public class LevelButton : MonoBehaviour
     {

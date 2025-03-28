@@ -23,6 +23,7 @@ namespace Features.Player
         private float maxRollAngleInDeg = 45f;
 
         private InputManager _inputManager;
+        private GameManager _gameManager;
         private Inputs _currentInputs = new(0, 0);
 
         private float CurrentRoll => transform.localRotation.eulerAngles.z.NormalizeAngle();
@@ -32,6 +33,7 @@ namespace Features.Player
         private void Start()
         {
             _inputManager = Locator.Instance.InputManager;
+            _gameManager = Locator.Instance.GameManager;
 
             SetUpFlightControls();
         }
@@ -39,9 +41,7 @@ namespace Features.Player
         private void FixedUpdate()
         {
             if (!enabled)
-            {
                 return;
-            }
 
             transform.position += transform.forward * (defaultMoveSpeedInSec * Time.deltaTime);
 
@@ -51,6 +51,14 @@ namespace Features.Player
         private void OnDestroy()
         {
             _inputManager.InputsChanged -= OnInputsChanged;
+            _inputManager.IsPlayerHangingChanged -= OnPlayerHangingChanged;
+        }
+
+        private void OnPlayerHangingChanged(bool isHanging)
+        {
+            if (isHanging) return;
+
+            _gameManager.PlayerLetGo();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -58,10 +66,10 @@ namespace Features.Player
             switch (other.tag)
             {
                 case Tags.Environment:
-                    Locator.Instance.GameManager.CollisionWithObstacle();
+                    _gameManager.CollisionWithObstacle();
                     break;
                 case Tags.Goal:
-                    Locator.Instance.GameManager.CollisionWithGoal();
+                    _gameManager.CollisionWithGoal();
                     break;
             }
         }
@@ -87,9 +95,7 @@ namespace Features.Player
             var currentRoll = CurrentRoll;
 
             if (currentRoll.IsApproximatelyZero())
-            {
                 return;
-            }
 
             var rollAngle = baseRoll * -Mathf.Sign(currentRoll);
 
@@ -105,9 +111,7 @@ namespace Features.Player
                  Mathf.Abs(rollAngle) > currentRoll &&
                  rollAngle > 0f)
             )
-            {
                 rollAngle = -currentRoll;
-            }
 
             Roll(rollAngle);
         }
@@ -142,13 +146,9 @@ namespace Features.Player
         {
             var currentRoll = CurrentRoll;
             if (currentRoll + rollAngle > maxRollAngleInDeg)
-            {
                 rollAngle = maxRollAngleInDeg - currentRoll;
-            }
             else if (currentRoll + rollAngle < -maxRollAngleInDeg)
-            {
                 rollAngle = -(maxRollAngleInDeg + currentRoll);
-            }
 
             return rollAngle;
         }
@@ -159,6 +159,7 @@ namespace Features.Player
         {
             OnInputsChanged(_inputManager.CurrentInputs);
             _inputManager.InputsChanged += OnInputsChanged;
+            _inputManager.IsPlayerHangingChanged += OnPlayerHangingChanged;
         }
 
         private void OnInputsChanged(Inputs inputs)

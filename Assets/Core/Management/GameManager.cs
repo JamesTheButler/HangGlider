@@ -23,9 +23,7 @@ namespace Core.Management
         private void ChangeState(GameState newState)
         {
             if (CurrentState == newState)
-            {
                 return;
-            }
 
             CurrentState = newState;
             OnGameStateChanged?.Invoke(newState);
@@ -41,9 +39,7 @@ namespace Core.Management
             ChangeState(GameState.InGame);
 
             if (!string.IsNullOrEmpty(_currentLevel))
-            {
                 SceneManager.UnloadSceneAsync(_currentLevel);
-            }
 
             _currentLevel = levelName;
             SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
@@ -71,6 +67,12 @@ namespace Core.Management
         {
             FindPlayer()?.SetEnabled(false);
             ChangeState(GameState.PostGameWin);
+        }
+
+        public void PlayerLetGo()
+        {
+            FindPlayer()?.SetEnabled(false);
+            ChangeState(GameState.PostGameFail);
         }
 
         [CanBeNull]

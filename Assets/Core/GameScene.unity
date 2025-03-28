@@ -7743,7 +7743,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiInputManager: {fileID: 1679920629}
   gameManager: {fileID: 1740090928}
-  postGameResetTimeInSec: 10
+  inputBlockInMs: 1500
+  resetTime: 10
 --- !u!1 &656603297
 GameObject:
   m_ObjectHideFlags: 0
@@ -10775,7 +10776,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 1279819656}
   simulatedWeightKg: 70
-  initialTickDelaySec: 2
   tickRateMs: 30
 --- !u!4 &1279819652
 Transform:
@@ -11678,7 +11678,7 @@ GameObject:
   - component: {fileID: 1439627073}
   - component: {fileID: 1439627072}
   m_Layer: 0
-  m_Name: Ui Camera
+  m_Name: UI Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12280,6 +12280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiInputManager: {fileID: 1679920629}
   gameManager: {fileID: 1740090928}
+  inputBlockInMs: 0
 --- !u!1 &1678872841
 GameObject:
   m_ObjectHideFlags: 0
@@ -12413,6 +12414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9676057677e3b458c90e6b176831eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1740090928}
   landingPage: {fileID: 1654722837}
   levelSelectionPage: {fileID: 2069062207}
   inGameUi: {fileID: 1974903445}
@@ -12430,6 +12432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff2fedb024e4f1ea9875872f87bdc87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 1279819656}
 --- !u!1 &1681855453 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2085200544077614073, guid: a5a61a1e2f88b4d45941aa6d8d6fba52, type: 3}
@@ -13571,7 +13574,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiInputManager: {fileID: 1679920629}
   gameManager: {fileID: 1740090928}
-  postGameResetTimeInSec: 10
+  inputBlockInMs: 1500
+  resetTime: 10
 --- !u!1 &2053739643 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4434192093266978345, guid: a5a61a1e2f88b4d45941aa6d8d6fba52, type: 3}
@@ -13706,6 +13710,7 @@ MonoBehaviour:
   levelSelectionData: {fileID: 11400000, guid: 83ce26fd06779ba46adbbf7f03a27fb7, type: 2}
   rootElement: {fileID: 763565067}
   levelButtonPrefab: {fileID: 870841500976259176, guid: abe4f7a207339ff4d85c05eaa1945145, type: 3}
+  inputBlockInMs: 500
 --- !u!1 &2071647412
 GameObject:
   m_ObjectHideFlags: 0

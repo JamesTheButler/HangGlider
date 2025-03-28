@@ -1,10 +1,12 @@
 using System.Collections;
 using Core.Inputs;
 using Core.Management;
+using Core.Utility;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace UI
+namespace UI.Pages
 {
     public class PostGamePage : PageBase
     {
@@ -15,19 +17,37 @@ namespace UI
         private GameManager gameManager;
 
         [SerializeField]
-        private float postGameResetTimeInSec;
+        private int inputBlockInMs = 3000;
+
+        [SerializeField]
+        private float resetTime;
 
         private Coroutine _postGameResetCoroutine;
+        private Coroutine _inputBlockCoroutine;
 
         protected override void OnOpen()
         {
-            uiInputManager.AnythingClicked += ResetGame;
-            StartResetTimer();
+            _inputBlockCoroutine = StartCoroutine(DelayInputActivation());
         }
 
         protected override void OnClose()
         {
+            if (_inputBlockCoroutine != null)
+                StopCoroutine(_inputBlockCoroutine);
+
+            if (_postGameResetCoroutine != null)
+                StopCoroutine(_postGameResetCoroutine);
+
             uiInputManager.AnythingClicked -= ResetGame;
+        }
+
+
+        private IEnumerator DelayInputActivation()
+        {
+            yield return new WaitForMilliseconds(inputBlockInMs);
+
+            uiInputManager.AnythingClicked += ResetGame;
+            StartResetTimer();
         }
 
         private void ResetGame()
@@ -44,11 +64,9 @@ namespace UI
         private void StartResetTimer()
         {
             if (_postGameResetCoroutine != null)
-            {
                 StopCoroutine(_postGameResetCoroutine);
-            }
 
-            _postGameResetCoroutine = StartCoroutine(ResetAfterDelay(postGameResetTimeInSec));
+            _postGameResetCoroutine = StartCoroutine(ResetAfterDelay(resetTime));
         }
 
         private IEnumerator ResetAfterDelay(float delayInSec)

@@ -1,11 +1,16 @@
 using System.Collections.Generic;
 using Core.Management;
+using NaughtyAttributes;
+using UI.Pages;
 using UnityEngine;
 
 namespace UI
 {
     public class UIManager : MonoBehaviour
     {
+        [SerializeField, Required]
+        private GameManager gameManager;
+
         [Header("UI Pages"), SerializeField]
         private PageBase landingPage;
 
@@ -23,8 +28,6 @@ namespace UI
 
         private Dictionary<GameState, PageBase> _pages;
 
-        private GameManager _gameManager;
-
 
         private void Awake()
         {
@@ -38,19 +41,17 @@ namespace UI
             };
 
             DisableAllUi();
-
-            _gameManager = Locator.Instance.GameManager;
         }
 
         private void Start()
         {
-            ChangeUi(_gameManager.CurrentState);
-            _gameManager.OnGameStateChanged += ChangeUi;
+            ChangeUi(gameManager.CurrentState);
+            gameManager.OnGameStateChanged += ChangeUi;
         }
 
         private void OnDisable()
         {
-            _gameManager.OnGameStateChanged -= ChangeUi;
+            gameManager.OnGameStateChanged -= ChangeUi;
         }
 
         private void ChangeUi(GameState newGameState)
@@ -63,7 +64,9 @@ namespace UI
         private void DisableAllUi()
         {
             foreach (var page in _pages.Values)
+            {
                 page.Close();
+            }
         }
     }
 }
