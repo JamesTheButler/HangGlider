@@ -13,7 +13,7 @@ namespace Core.Inputs
         private float simulatedWeightKg = 70f;
 
         [SerializeField]
-        private float tickRateMs = 30f;
+        private int tickRateMs = 30;
 
         private InputActions _controls;
 
@@ -47,11 +47,13 @@ namespace Core.Inputs
 
         private IEnumerator PostInputs()
         {
-            var tickInterval = tickRateMs * .001f;
             while (true)
             {
-                inputManager.Invoke(Inputs);
-                yield return new WaitForSeconds(tickInterval);
+                if (isActiveAndEnabled)
+                { 
+                    inputManager.Invoke(Inputs);
+                }
+                yield return new Utility.WaitForMilliseconds(tickRateMs);
             }
         }
 

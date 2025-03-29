@@ -1,3 +1,4 @@
+using System.Globalization;
 using UnityEngine;
 
 namespace Core.Inputs
@@ -19,9 +20,11 @@ namespace Core.Inputs
             }
 
             var split = message.Split(",");
-            var left = float.Parse(split[0]) * weightAmplifier;
-            var right = float.Parse(split[1]) * weightAmplifier;
+            var leftRaw = float.Parse(split[0], CultureInfo.InvariantCulture);  ; ;
+            var rightRaw = float.Parse(split[1], CultureInfo.InvariantCulture);
 
+            var left = leftRaw > 0.5 ? leftRaw * weightAmplifier : 0f;
+            var right = rightRaw > 0.5 ? rightRaw * weightAmplifier : 0f;
             inputManager.Invoke(new Inputs(left, right));
         }
 
