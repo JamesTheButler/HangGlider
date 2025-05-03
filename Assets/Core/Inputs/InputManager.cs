@@ -7,8 +7,7 @@ namespace Core.Inputs
 {
     public class InputManager : MonoBehaviour
     {
-        // TODO: this needs to be calculated somehow
-        public float PlayerWeight { get; } = 70f;
+        public float PlayerWeight { get; private set; } = 70f;
 
         [SerializeField]
         private float hangingChangeDelayInMs = 200;
@@ -34,6 +33,7 @@ namespace Core.Inputs
         private void ChangeCurrentInputs(Inputs newInputs)
         {
             CurrentInputs = newInputs;
+            PlayerWeight = Mathf.Abs(newInputs.Left) + Mathf.Abs(newInputs.Right);
             InputsChanged?.Invoke(newInputs);
         }
 

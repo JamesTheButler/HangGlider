@@ -25,7 +25,7 @@ namespace UI.Widgets.WeightSensor
 
         private void UpdateUI(Inputs inputs)
         {
-            var totals = Mathf.Abs(inputs.Right) + Mathf.Abs(inputs.Left);
+            var totals = inputManager.PlayerWeight;
 
             left.SetKg(inputs.Left);
             var leftPercent = inputs.Left / totals * 100f;
