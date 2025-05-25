@@ -17,6 +17,9 @@ namespace Core.Management
         [field: SerializeField]
         public InputManager InputManager { get; private set; }
 
+        [field: SerializeField]
+        public InputDiffToRotationMap InputMap { get; private set; }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)

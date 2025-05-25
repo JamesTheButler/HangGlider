@@ -25,6 +25,7 @@ namespace Features.Player
         private bool _isFlying;
 
         private InputManager _inputManager;
+        private InputDiffToRotationMap _inputMap;
         private GameManager _gameManager;
         private Inputs _currentInputs = new(0, 0);
 
@@ -35,6 +36,7 @@ namespace Features.Player
         private void Start()
         {
             _inputManager = Locator.Instance.InputManager;
+            _inputMap = Locator.Instance.InputMap;
             _gameManager = Locator.Instance.GameManager;
         }
 
@@ -84,7 +86,7 @@ namespace Features.Player
 
         private void ApplyInputs()
         {
-            var inputDiff = GetInputDiff();
+            var inputDiff = _inputMap.Evaluate(_currentInputs);
 
             if (inputDiff.IsApproximatelyZero())
             {
@@ -171,11 +173,6 @@ namespace Features.Player
         private void OnInputsChanged(Inputs inputs)
         {
             _currentInputs = inputs;
-        }
-
-        private float GetInputDiff()
-        {
-            return (_currentInputs.Left - _currentInputs.Right) / (_inputManager.PlayerWeight * .5f);
         }
 
         #endregion

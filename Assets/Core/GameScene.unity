@@ -11002,6 +11002,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1279819652}
+  - component: {fileID: 1279819657}
   - component: {fileID: 1279819656}
   - component: {fileID: 1279819651}
   - component: {fileID: 1279819653}
@@ -11150,6 +11151,60 @@ MonoBehaviour:
     <Left>k__BackingField: 0
     <Right>k__BackingField: 0
   <IsPlayerHanging>k__BackingField: 0
+--- !u!114 &1279819657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279819650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb627d4200f4cdda7ccab82b23d40eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rollAngleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.05
+      value: 0
+      inSlope: -5.191241
+      outSlope: -5.191241
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08633446
+    - serializedVersion: 3
+      time: 0.95
+      value: 90
+      inSlope: 2.5248132
+      outSlope: 2.5248132
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: 90
+      inSlope: 2.0766597
+      outSlope: 2.0766597
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1281710203 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3020873269842242051, guid: a5a61a1e2f88b4d45941aa6d8d6fba52, type: 3}
@@ -12988,6 +13043,7 @@ MonoBehaviour:
   <GameManager>k__BackingField: {fileID: 1740090928}
   <UIManager>k__BackingField: {fileID: 1679920628}
   <InputManager>k__BackingField: {fileID: 1279819656}
+  <InputMap>k__BackingField: {fileID: 1279819657}
 --- !u!1 &1748757400
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,5 +28,10 @@ namespace Core.Inputs
         {
             return Left.IsApproximatelyZero() && Right.IsApproximatelyZero();
         }
+
+        public float GetDiff()
+        {
+            return Left - Right;
+        }
     }
 }
