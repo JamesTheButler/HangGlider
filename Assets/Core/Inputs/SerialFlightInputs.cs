@@ -20,7 +20,7 @@ namespace Core.Inputs
             }
 
             var split = message.Split(",");
-            var leftRaw = float.Parse(split[0], CultureInfo.InvariantCulture);  ; ;
+            var leftRaw = float.Parse(split[0], CultureInfo.InvariantCulture);
             var rightRaw = float.Parse(split[1], CultureInfo.InvariantCulture);
 
             var left = leftRaw > 0.5 ? leftRaw * weightAmplifier : 0f;
