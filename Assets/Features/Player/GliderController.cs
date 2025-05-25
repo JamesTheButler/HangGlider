@@ -86,7 +86,8 @@ namespace Features.Player
 
         private void ApplyInputs()
         {
-            var inputDiff = _inputMap.Evaluate(_currentInputs);
+            //var inputDiff = _inputMap.Evaluate(_currentInputs);
+            var inputDiff = (_currentInputs.Left - _currentInputs.Right) / (_inputManager.PlayerWeight * .5f);
 
             if (inputDiff.IsApproximatelyZero())
             {
