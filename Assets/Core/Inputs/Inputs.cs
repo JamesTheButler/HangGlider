@@ -33,5 +33,10 @@ namespace Core.Inputs
         {
             return Left - Right;
         }
+
+        public override string ToString()
+        {
+            return $"L {Left} R {Right}";
+        }
     }
 }

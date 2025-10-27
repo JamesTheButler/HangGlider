@@ -7,23 +7,17 @@ namespace Features.Player
 {
     public class GliderController : MonoBehaviour
     {
-        [SerializeField, Range(0f, 1f)] 
-        private float centerThreshold = 0.1f, maxThreshold = 0.75f;
+        [SerializeField, Range(0f, 1f)] private float centerThreshold = 0.1f, maxThreshold = 0.75f;
 
-        [SerializeField]
-        private float defaultMoveSpeedInSec = 5f;
-        
-        [SerializeField]
-        private float yawSpeedInDegPerSec = 2f;
+        [SerializeField] private float defaultMoveSpeedInSec = 5f;
 
-        [Header("Roll"), SerializeField]
-        private float rollSpeedInDegPerSec = 2f;
+        [SerializeField] private float yawSpeedInDegPerSec = 2f;
 
-        [SerializeField]
-        private float rollResetSpeedInDegPerSec = 2f;
+        [Header("Roll"), SerializeField] private float rollSpeedInDegPerSec = 2f;
 
-        [SerializeField]
-        private float maxRollAngleInDeg = 45f;
+        [SerializeField] private float rollResetSpeedInDegPerSec = 2f;
+
+        [SerializeField] private float maxRollAngleInDeg = 45f;
 
         private bool _isFlying;
 
@@ -89,47 +83,24 @@ namespace Features.Player
 
         private void ApplyInputs()
         {
+            if (_inputManager.PlayerWeight.IsApproximatelyZero())
+                return;
+            
             //var inputDiff = _inputMap.Evaluate(_currentInputs);
             var inputDiff = (_currentInputs.Left - _currentInputs.Right) / _inputManager.PlayerWeight;
+            
             Steer(inputDiff);
-        }
-
-        private void AutoLevel()
-        {
-            var baseRoll = rollResetSpeedInDegPerSec * Time.deltaTime;
-            var currentRoll = CurrentRoll;
-
-            if (currentRoll.IsApproximatelyZero())
-                return;
-
-            var rollAngle = baseRoll * -Mathf.Sign(currentRoll);
-
-            // fix wobble around center
-            if (
-                (currentRoll > 0 &&
-                 currentRoll < baseRoll &&
-                 Mathf.Abs(rollAngle) > currentRoll &&
-                 rollAngle < 0f)
-                ||
-                (currentRoll < 0 &&
-                 Mathf.Abs(currentRoll) < baseRoll &&
-                 Mathf.Abs(rollAngle) > currentRoll &&
-                 rollAngle > 0f)
-            )
-                rollAngle = -currentRoll;
-
-            Roll(rollAngle);
         }
 
         private void Steer(float inputDiff)
         {
             var absDiff = Mathf.Abs(inputDiff);
             // yaw
-            var yaw = yawSpeedInDegPerSec * Time.deltaTime * -inputDiff;
+            var yawDelta = yawSpeedInDegPerSec * Time.deltaTime * -inputDiff;
             transform.RotateAround(
                 transform.position,
                 Vector3.up,
-                yaw);
+                yawDelta);
 
             // roll
             float rollAngle;
@@ -148,15 +119,12 @@ namespace Features.Player
                 rollAngle = Mathf.Lerp(0, maxRollAngleInDeg, t);
             }
 
-            Roll(Mathf.Sign(inputDiff) * rollAngle);
-        }
+            rollAngle *= Mathf.Sign(inputDiff);
 
-        private void Roll(float rollAngle)
-        {
-            transform.RotateAround(
-                transform.position,
-                transform.forward,
-                rollAngle);
+
+            var pitch = transform.eulerAngles.x; // preserve pitch
+            var yaw = transform.eulerAngles.y; // preserve pitch
+            transform.rotation = Quaternion.Euler(pitch, yaw, rollAngle);
         }
 
         #region Input Detection
@@ -170,6 +138,7 @@ namespace Features.Player
 
         private void OnInputsChanged(Inputs inputs)
         {
+            Debug.Log($"new input {inputs}");
             _currentInputs = inputs;
         }
 

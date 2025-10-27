@@ -203,6 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 411087b11cae15c4ebba579349f15f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  centerThreshold: 0.1
+  maxThreshold: 0.75
   defaultMoveSpeedInSec: 10
   yawSpeedInDegPerSec: 10
   rollSpeedInDegPerSec: 30
