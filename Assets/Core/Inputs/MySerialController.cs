@@ -45,6 +45,21 @@ namespace Core.Inputs
             }
         }
 
+        void OnDisable()
+        {
+            foreach (var (port, thread) in _serialThreads)
+            {
+                thread.RequestStop();
+                _serialThreads[port] = null;
+            }
+
+            foreach (var (port, thread) in _threads)
+            {
+                thread.Join();
+                _threads[port] = null;
+            }
+        }
+
         private void ReadSerialMessageToMessageListener(string portName, SerialThreadLines serialThread)
         {
             var message = (string)serialThread.ReadMessage();
@@ -54,6 +69,7 @@ namespace Core.Inputs
 
             if (message.Contains(","))
             {
+                SelectPort(portName);
                 Debug.Log($"message '{message}' on port {portName}");
                 connectionChanged.Invoke(true);
                 messageReceived.Invoke(message);
@@ -68,13 +84,15 @@ namespace Core.Inputs
                 if (port == portName) continue;
 
                 thread.RequestStop();
+                _serialThreads[port] = null;
             }
 
             foreach (var (port, thread) in _threads)
             {
                 if (port == portName) continue;
 
-                thread.Abort();
+                thread.Join();
+                _threads[port] = null;
             }
         }
     }
