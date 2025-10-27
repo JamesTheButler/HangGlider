@@ -11006,8 +11006,7 @@ GameObject:
   - component: {fileID: 1279819656}
   - component: {fileID: 1279819651}
   - component: {fileID: 1279819653}
-  - component: {fileID: 1279819654}
-  - component: {fileID: 1279819655}
+  - component: {fileID: 1279819658}
   m_Layer: 0
   m_Name: Inputs
   m_TagString: Untagged
@@ -11058,82 +11057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 1279819656}
-  weightAmplifier: 20
---- !u!114 &1279819654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1279819650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bc5f48af2cffd747a079fe8c632e2c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portName: COM3
-  baudRate: 115200
-  messageListener: {fileID: 1279819650}
-  reconnectionDelay: 1000
-  maxUnreadMessages: 3
-  dropOldMessage: 0
-  readAllMessages: 0
-  dtrEnable: 0
-  rtsEnable: 0
---- !u!114 &1279819655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1279819650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ec6ec1c544b4aab8064e991e5c2a8b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onConnectionStateChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1279819653}
-        m_TargetAssemblyTypeName: Code.Inputs.SerialFlightInputs, Assembly-CSharp
-        m_MethodName: OnConnectionStatusChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 77073793}
-        m_TargetAssemblyTypeName: UI.ConnectionIndicator, Assembly-CSharp
-        m_MethodName: OnConnectionStatusChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onMessageReceived:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1279819653}
-        m_TargetAssemblyTypeName: Code.Inputs.SerialFlightInputs, Assembly-CSharp
-        m_MethodName: OnMessageArrived
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  weightAmplifier: 1
 --- !u!114 &1279819656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11158,7 +11082,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1279819650}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cb627d4200f4cdda7ccab82b23d40eb, type: 3}
   m_Name: 
@@ -11205,6 +11129,62 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1279819658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279819650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e26ffbc2bb294833ad4e47527af8b8a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectionChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1279819653}
+        m_TargetAssemblyTypeName: Core.Inputs.SerialFlightInputs, Assembly-CSharp
+        m_MethodName: OnConnectionStatusChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 77073793}
+        m_TargetAssemblyTypeName: UI.Widgets.ConnectionIndicator, Assembly-CSharp
+        m_MethodName: OnConnectionStatusChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  messageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1279819653}
+        m_TargetAssemblyTypeName: Core.Inputs.SerialFlightInputs, Assembly-CSharp
+        m_MethodName: OnMessageArrived
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  baudRate: 115200
+  reconnectionDelay: 1000
 --- !u!1 &1281710203 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3020873269842242051, guid: a5a61a1e2f88b4d45941aa6d8d6fba52, type: 3}

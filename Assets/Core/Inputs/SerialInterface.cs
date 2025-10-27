@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Core.Inputs
 {
-    [RequireComponent(typeof(SerialController))]
+    [RequireComponent(typeof(MySerialController))]
     public class SerialInterface : MonoBehaviour
     {
         [SerializeField]

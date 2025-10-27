@@ -1,15 +1,34 @@
 using System.Globalization;
+using System.IO.Ports;
+using System.Text;
 using UnityEngine;
 
 namespace Core.Inputs
 {
     public class SerialFlightInputs : MonoBehaviour
     {
-        [SerializeField]
-        private InputManager inputManager;
+        [SerializeField] private InputManager inputManager;
 
-        [SerializeField]
-        private float weightAmplifier;
+        [SerializeField] private float weightAmplifier;
+
+        private void Start()
+        {
+            var ports = SerialPort.GetPortNames();
+            if (ports.Length == 0)
+            {
+                Debug.Log("No serial ports found.");
+            }
+            else
+            {
+                var sb = new StringBuilder("Available serial ports: ");
+                foreach (var port in ports)
+                {
+                    sb.Append($"{port}, ");
+                }
+
+                Debug.LogError(sb.ToString());
+            }
+        }
 
         public void OnMessageArrived(string message)
         {
