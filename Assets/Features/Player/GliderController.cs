@@ -7,9 +7,12 @@ namespace Features.Player
 {
     public class GliderController : MonoBehaviour
     {
+        [SerializeField, Range(0f, 1f)] 
+        private float centerThreshold = 0.1f, maxThreshold = 0.75f;
+
         [SerializeField]
         private float defaultMoveSpeedInSec = 5f;
-
+        
         [SerializeField]
         private float yawSpeedInDegPerSec = 2f;
 
@@ -87,14 +90,7 @@ namespace Features.Player
         private void ApplyInputs()
         {
             //var inputDiff = _inputMap.Evaluate(_currentInputs);
-            var inputDiff = (_currentInputs.Left - _currentInputs.Right) / (_inputManager.PlayerWeight * .5f);
-
-            if (inputDiff.IsApproximatelyZero())
-            {
-                AutoLevel();
-                return;
-            }
-
+            var inputDiff = (_currentInputs.Left - _currentInputs.Right) / _inputManager.PlayerWeight;
             Steer(inputDiff);
         }
 
@@ -127,6 +123,7 @@ namespace Features.Player
 
         private void Steer(float inputDiff)
         {
+            var absDiff = Mathf.Abs(inputDiff);
             // yaw
             var yaw = yawSpeedInDegPerSec * Time.deltaTime * -inputDiff;
             transform.RotateAround(
@@ -135,9 +132,23 @@ namespace Features.Player
                 yaw);
 
             // roll
-            var rollAngle = inputDiff * rollSpeedInDegPerSec * Time.deltaTime;
-            var clampedRollAngle = ClampRollAngle(rollAngle);
-            Roll(clampedRollAngle);
+            float rollAngle;
+
+            if (absDiff < centerThreshold)
+            {
+                rollAngle = 0f;
+            }
+            else if (absDiff > maxThreshold)
+            {
+                rollAngle = maxRollAngleInDeg;
+            }
+            else
+            {
+                var t = Mathf.InverseLerp(centerThreshold, maxThreshold, absDiff);
+                rollAngle = Mathf.Lerp(0, maxRollAngleInDeg, t);
+            }
+
+            Roll(Mathf.Sign(inputDiff) * rollAngle);
         }
 
         private void Roll(float rollAngle)
@@ -146,20 +157,6 @@ namespace Features.Player
                 transform.position,
                 transform.forward,
                 rollAngle);
-        }
-
-        /// <summary>
-        /// Clamp desired roll angle if it would over-rotate.
-        /// </summary>
-        private float ClampRollAngle(float rollAngle)
-        {
-            var currentRoll = CurrentRoll;
-            if (currentRoll + rollAngle > maxRollAngleInDeg)
-                rollAngle = maxRollAngleInDeg - currentRoll;
-            else if (currentRoll + rollAngle < -maxRollAngleInDeg)
-                rollAngle = -(maxRollAngleInDeg + currentRoll);
-
-            return rollAngle;
         }
 
         #region Input Detection
