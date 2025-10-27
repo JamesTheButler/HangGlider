@@ -31,7 +31,7 @@ namespace Core.Inputs
                     false);
                 var thread = new Thread(serialThread.RunForever);
                 thread.Start();
-                
+
                 _threads.Add(port, thread);
                 _serialThreads.Add(port, serialThread);
             }
@@ -51,17 +51,11 @@ namespace Core.Inputs
             if (message == null)
                 return;
 
-            if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
+
+            if (message.Contains(","))
             {
-                SelectPort(portName);
+                Debug.Log($"message '{message}' on port {portName}");
                 connectionChanged.Invoke(true);
-            }
-            else if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
-            {
-                connectionChanged.Invoke(false);
-            }
-            else
-            {
                 messageReceived.Invoke(message);
             }
         }
@@ -72,14 +66,14 @@ namespace Core.Inputs
             foreach (var (port, thread) in _serialThreads)
             {
                 if (port == portName) continue;
-                
+
                 thread.RequestStop();
             }
 
             foreach (var (port, thread) in _threads)
             {
                 if (port == portName) continue;
-                
+
                 thread.Abort();
             }
         }

@@ -32,7 +32,6 @@ namespace Core.Inputs
 
         public void OnMessageArrived(string message)
         {
-            Debug.Log(message);
             if (!message.Contains(','))
             {
                 return;
